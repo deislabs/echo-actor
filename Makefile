@@ -52,7 +52,7 @@ release-build:
 
 .PHONY: release-sign
 release-sign:
-	wascap sign target/wasm32-unknown-unknown/release/echo_actor.wasm target/wasm32-unknown-unknown/release/echo_actor_s.wasm -c wok:echoProvider  -a $(KEYDIR)/account.nk -m $(KEYDIR)/module.nk -s
+	wascap sign target/wasm32-unknown-unknown/release/echo_actor.wasm target/wasm32-unknown-unknown/release/echo_actor_s.wasm -c wok:echoProvider  -a $(KEYDIR)/account.nk -m $(KEYDIR)/module.nk
 
 .PHONY: keys keys-account keys-module
 
