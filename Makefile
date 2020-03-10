@@ -15,6 +15,7 @@
 COLOR ?= always # Valid COLOR options: {always, auto, never}
 CARGO = cargo --color $(COLOR)
 TARGET = target/wasm32-unknown-unknown/debug
+RELEASE_TARGET =target/wasm32-unknown-unknown/release
 KEYDIR = .keys
 
 .PHONY: all bench build check clean doc test update
@@ -26,7 +27,7 @@ bench:
 
 build:
 	@$(CARGO) build
-	wascap sign $(TARGET)/echo_actor.wasm $(TARGET)/echo_actor_signed.wasm -a ./.keys/account.nk -m ./.keys/module.nk -s
+	wascap sign $(TARGET)/echo_actor.wasm $(TARGET)/echo_actor_signed.wasm -i ./.keys/account.nk -u ./.keys/module.nk -n "Echo Actor" -s
 
 check:
 	@$(CARGO) check
@@ -52,7 +53,7 @@ release-build:
 
 .PHONY: release-sign
 release-sign:
-	wascap sign target/wasm32-unknown-unknown/release/echo_actor.wasm target/wasm32-unknown-unknown/release/echo_actor_s.wasm -c wok:echoProvider  -a $(KEYDIR)/account.nk -m $(KEYDIR)/module.nk
+	wascap sign $(RELEASE_TARGET)/echo_actor.wasm $(RELEASE_TARGET)/echo_actor_s.wasm -c wok:echoProvider  -i $(KEYDIR)/account.nk -u $(KEYDIR)/module.nk -n "Echo Actor" -s 
 
 .PHONY: keys keys-account keys-module
 

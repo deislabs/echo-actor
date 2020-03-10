@@ -18,16 +18,13 @@ use actor::prelude::*;
 
 const OP_ECHO_REQUEST: &str = "EchoRequest";
 
-actor_receive!(receive);
+actor_handlers!{ OP_ECHO_REQUEST => hello_world, 
+    core::OP_HEALTH_REQUEST => health }
 
-pub fn receive(ctx: &CapabilitiesContext, operation: &str, msg: &[u8]) -> CallResult {
-    match operation {
-        OP_ECHO_REQUEST => hello_world(ctx, msg),
-        core::OP_HEALTH_REQUEST => Ok(vec![]),
-        _ => Err("Unknown operation".into()),
-    }
+
+fn health(_ctx: &CapabilitiesContext, _req: core::HealthRequest) -> ReceiveResult { 
+    Ok(vec![])
 }
-
 fn hello_world(_ctx: &CapabilitiesContext, payload: &[u8]) -> CallResult {
     Ok(payload.into())
 }
